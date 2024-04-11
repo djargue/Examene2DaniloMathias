@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 import * as React from 'react'; 
-import { useState } from 'react'; 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,9 +8,24 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import axios from 'axios';
 
 
 function App() {
+
+
+  function traerInfomacionBack() {
+    const url = 'http://localhost:3000/hola_mundo';
+  
+    axios.get(url)
+      .then((res) => {
+        setRespuestaBack(res.data); 
+      })
+      .catch((error) => {
+        console.error('Error al obtener datos del backend:', error);
+      });
+  };
+  
 
   const[respuestaBack, setRespuestaBack] = useState([]);
 
@@ -41,10 +55,11 @@ function App() {
     <div className="fondo"> 
       <br/>
       <br/>
-      <Button  variant="contained">Llamar al Back</Button>
+      <Button onClick={traerInfomacionBack} variant="contained">Llamar al Back</Button>
 
       <br/>
       <br/>
+      {respuestaBack}
       
     </div> 
 
